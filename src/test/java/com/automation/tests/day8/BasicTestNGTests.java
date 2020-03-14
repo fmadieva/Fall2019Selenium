@@ -4,6 +4,17 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 
 public class BasicTestNGTests {
+    // runs only once before @BeforeClass and @BeforeMethod
+    @BeforeTest
+    public void beforeTest(){
+        System.out.println("BEFORE TEST");
+    }
+
+    // runs only once after @AfterClass and @AfterMethod
+    @AfterTest
+    public void afterTest(){
+        System.out.println("AFTER TEST");
+    }
 
     // Runs only once in the class before @beforeMethod and before any test
     // regardless on number of tests, it runs only once at the beginning.
@@ -51,4 +62,30 @@ public class BasicTestNGTests {
 }
 
 // we create the beforeMethod and after method once in every class
+/*
+BEFORE TEST
+    Before CLASS
+        Before METHOD
+            TEST 1
+        After METHOD
 
+        Before METHOD
+             TEST 2
+        After METHOD
+    After CLASS
+AFTER TEST
+ */
+
+// Suite - it's a collection of tests. For example: regression suite
+
+// TestNG has 2 types of assertions: hard and soft.
+/*
+Assert class provides hard assertions.
+
+Whats the difference? If hard assertion fails - test execution stops due to exception. In case of soft
+assertion - test execution doesn't stop. For soft assertion you can use the class - SOoftAssert. But, common practice
+is to use only hard assertions.
+
+JUnit, for example: has only hard assertions.
+
+ */
