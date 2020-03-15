@@ -32,9 +32,38 @@ public class SearchTests {
                 System.out.println("var = " + var);
                 //verify that every search result contains java
                 Assert.assertTrue(var.toLowerCase().contains("java"));
+
             }
         }
     }
+
+    /**
+     * Given user is on the amazon.com page
+     * When user enters "java" as a search item
+     * Then user clicks on the search button
+     * And user clicks on the first search item
+     * And user verifies taht title of the search item contains "Java"
+     */
+    @Test(description = "Search for Java book on Amazon")
+    public void amazonSearchTest(){
+        driver.get("http://amazon.com");
+        BrowserUtils.wait(3);
+
+        driver.findElement(By.id("twotabsearchtextbox")).sendKeys("Java", Keys.ENTER);
+        BrowserUtils.wait(3);
+
+        List<WebElement> searchItems = driver.findElements(By.tagName("h2"));
+
+        searchItems.get(0).click();
+        BrowserUtils.wait(5);
+
+        WebElement productTitle = driver.findElement(By.id("title"));
+        String productTitleString = productTitle.getText();
+        System.out.println("productTitleString = " + productTitleString);
+
+        Assert.assertTrue(productTitleString.contains("Java"));
+    }
+
 
     @BeforeMethod // set up
     public void setup(){
