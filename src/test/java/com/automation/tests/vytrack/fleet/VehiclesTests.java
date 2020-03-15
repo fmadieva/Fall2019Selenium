@@ -7,6 +7,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -28,6 +29,7 @@ public class VehiclesTests {
 
     private By fleetBy = By.xpath("//*[@class='title title-level-1' and contains(text(),'Fleet')]");
     private By subtitleBy = By.className("oro-subtitle");
+    private By pageNumberBy = By.cssSelector("input[type='number']");
 
 
     @Test(description = "verify that subtitle is equal to All Cars")
@@ -44,9 +46,29 @@ public class VehiclesTests {
         WebElement subTitleElement = driver.findElement(subtitleBy); // get this element
         System.out.println(subTitleElement.getText()); // get the text
 
+        String expected = "All Cars";
+        String actual = subTitleElement.getText();
+
+        Assert.assertEquals(actual, expected);
+
 
     }
 
+    /**
+     *
+     *     ################ TASK 7 minutes until 3:48
+     *
+     *     Given user is on the vytrack landing page
+     *     When user logs on as a store manager
+     *     Then user navigates to Fleet --> Vehicles
+     *     And user verifies that page number is equals to "1"
+     */
+    @Test
+    public void verifyPageNumber(){
+        String expected = "1";
+        String actual = driver.findElement(pageNumberBy).getAttribute("value");
+        Assert.assertEquals(actual, expected);
+    }
 
     @BeforeMethod
     public void setup(){
