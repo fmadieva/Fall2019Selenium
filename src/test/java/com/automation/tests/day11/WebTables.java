@@ -85,3 +85,16 @@ public class WebTables {
 
     }
 }
+
+//first way :
+//once you find email cell in the first table that has this email (jdoe@hotmail.com) then go to following sibling has linkText delete :
+//td element with email and td element that contains delete => are siblings
+////td[text()='jdoe@hotmail.com']//following-sibling::td/a[text()='delete']
+//to make it easier :
+//go back to parent and find link that has text delete
+//td is child of tr
+////td[text()='fbach@yahoo.com']/..//a[text()='delete']
+//even more simple way :
+//it is more hardcoded! but easiest => you provide index so it s not flexible, if index is change ilocator will never find it
+//go to find email in the first table go to parent go to second link inside this element
+////table[1]//td[text()='jsmith@gmail.com']/..//a[2]
