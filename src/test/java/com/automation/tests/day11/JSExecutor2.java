@@ -104,6 +104,14 @@ public class JSExecutor2 {
     }
 
 
+    public void scrollTest(){
+        driver.navigate().to("http://practice.cybertekschool.com/infinite_scroll");
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+       // for (int i = 0; i < ; i++) {
+            
+      //  }
+    }
 
     @AfterMethod
     public void teardown(){
