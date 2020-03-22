@@ -33,3 +33,12 @@ public class ExplicitWait {
         driver.quit();
     }
 }
+//wait up to 10 seconds until title contains google
+//ExpectedConditions is a class , we use it for explicit wait;
+//ExpectedCondition is interface it's usage is different, we will use it in fluent wait
+ //     wait.until(ExpectedConditions.titleContains("Google"));
+//when condition fails => we will get exception.
+//by default it will check every 500 milliseconds => means that it checked 20 times until find the element
+//Exception :
+//org.openqa.selenium.TimeoutException: Expected condition failed:
+//waiting for title to contain "Amazon". Current title: "Google" (tried for 10 second(s) with 500 milliseconds interval)
