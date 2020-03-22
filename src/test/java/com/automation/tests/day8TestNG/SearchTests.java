@@ -1,4 +1,4 @@
-package com.automation.tests.day8;
+package com.automation.tests.day8TestNG;
 
 import com.automation.utilities.BrowserUtils;
 import io.github.bonigarcia.wdm.WebDriverManager;

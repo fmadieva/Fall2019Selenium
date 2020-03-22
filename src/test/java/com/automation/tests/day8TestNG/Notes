@@ -1,0 +1,86 @@
+March 14, 2020
+
+Agenda: TestNG
+
+
+Levels of testing:
+
+unit - testing of smallest functional piece of the application. For example: method or class...
+
+integration
+system
+UAT
+
+In my project, developers were following this flow:
+
+developers write a code --> unit tests to test their code --> code review --> new build can be deployed to the test env --> and here we do functional testing
+
+
+Who writes unit tests? For application code - developers.
+
+Can I write some unit tests for my automation framework? yes
+
+import org.testng.annotations.Test;
+
+
+@Test - annotation used to create a test. Pu it on top of the method. In this case, we don't use main method and we can create lot's of tests in one class.
+
+BEFORE SUITE
+
+BEFORE TEST
+
+BEFORE CLASS
+
+BEFORE METHOD
+TEST 1
+AFTER METHOD
+
+BEFORE METHOD
+TEST 2
+AFTER METHOD
+
+AFTER CLASS
+
+AFTER TEST
+
+AFTER SUITE
+
+
+
+SUITE - it's a collection of tests. For example: regression suite.
+
+TestNG has 2 types of assertions: hard and soft.
+
+Assert class provides hard assertions.
+
+What's the difference? If hard assertion fails - test execution stops due to exception. In case of soft assertion - test execution doesn't stop. For soft assertions you can use the class - SoftAssert. But, common practice is to use only hard assertions. Junit, for example, has only hard assertions.
+
+
+We use annotation to create tests and organize them.
+
+####TASK for 10 minutes: until 4:17
+
+Create a class called PracticeTests
+
+- setup before/after methods
+- in before method - instantiate webdriver and navigate to: http://practice.cybertekschool.com/
+- in after method - just close webdriver.
+
+- create a test called loginTest
+- go to "Form Authentication" page
+- enter valid credentials
+username: tomsmith
+password: SuperSecretPassword
+
+- verify that following sub-header message is displayed: "Welcome to the Secure Area. When you are done click logout below."
+
+###################################
+
+TestNG - it's a unit testing, functional testing, e2e testing tool. In test automation we use TestNG along with Selenium Webdriver to develop UI test automation scripts. TestNG was inspired by Junit (another very popular unit testing framework).
+TestNG has:
+
+- annotations for more complex test, like: @BeforeSuite, @BeforeClass, @BeforeMethod, @Test, etc..
+- allows to create test suits with xml runners
+- has in-build HTML report
+- allows to group tests
+- allows to do Data Driven Testing
