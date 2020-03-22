@@ -1,35 +1,35 @@
 Warm-up task for 15 minutes:
 Go to http://practice.cybertekschool.com/tables
-Click on “Last name” column name
+Click on "Last name" column name
 Verify that table is sorted by last name in alphabetic order.
 until 11:19
-“a”.compareTo(“b”) = -1
+"a".compareTo("b") = -1
 61 - 62 = -1
 a is before b
-“a”.compareTo(“a”)
+"a".compareTo("a")
 61 - 61 = 0
 0 means 2 strings are equals
 table - tag that is used to create a web table in HTML
 <table>
-	<thead>
-		<tr>
-			<th>First Name</th>
-			<th>Last Name</th>
-			<th>Address</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>James</td>
-			<td>May</td>
-			<td>101 Groove St.</td>
-		</tr>
-		<tr>
-			<td>Mark</td>
-			<td>Portman</td>
-			<td>974 Green Ave</td>
-		</tr>
-	</tbody>
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Address</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>James</td>
+            <td>May</td>
+            <td>101 Groove St.</td>
+        </tr>
+        <tr>
+            <td>Mark</td>
+            <td>Portman</td>
+            <td>974 Green Ave</td>
+        </tr>
+    </tbody>
 </table>
 //table[1] - get the first table on the page
 //table[1]//tr - get all rows from first table
@@ -43,11 +43,12 @@ table - tag that is used to create a web table in HTML
 #######################################################################
 Synchronization issues are very common in selenium webdriver. To overcome these issues we use waits.
 As of now, we have used only one thing to slow down our script - Thread.sleep().
+
 Waits from selenium:
-	- implicit wait
-	- explicit wait
-	- fluent wait
-Implicit wait - apply only once at the beginning of test execution. IF works before findElement method automatically. If WebDriver cannot find an element in the DOM, it waits for defined amount of time for the element to appear in the DOM. Once specified wait time is over, and element is not found, in specified time, it will throw NoSuchElementExecption.
+    - implicit wait
+    - explicit wait
+    - fluent wait
+####Implicit wait - apply only once at the beginning of test execution. IF works before findElement method automatically. If WebDriver cannot find an element in the DOM, it waits for defined amount of time for the element to appear in the DOM. Once specified wait time is over, and element is not found, in specified time, it will throw NoSuchElementExecption.
 Default implicit wait is - 0 seconds;
 When implicit wait has been applied, webdriver will try to look up for element in the specified period of time. If element was found faster, execution will be resumed.
 How to use implicit wait?
@@ -57,8 +58,8 @@ driver.manage().timeouts().implicitlyWait(time, time units);
 For example:
 driver.manage().timeouts().implicitlyWait(20, TimeUnits.SECONDS);
 That means webdriver, will be waiting for any element up to 20 seconds.
-#RECOMENDATION: don’t use implicit and explicit waits together. You might get unexpectedly long waits.
-Explicit wait - provides better way to wait over implicit wait. Unlike implicit wait, you can write and use pre-defined conditions or custom conditions before proceeding further.
+#RECOMENDATION: don't use implicit and explicit waits together. You might get unexpectedly long waits.
+###Explicit wait - provides better way to wait over implicit wait. Unlike implicit wait, you can write and use pre-defined conditions or custom conditions before proceeding further.
 Explicit wait - exact condition and exact element. Implicit wait - only one condition (presence of element in the DOM) and it applies for every findElement() method invocation.
 How to implement Explicit wait?
 For this, we use WebDriverWait class.
@@ -71,14 +72,41 @@ visibilityOf()
 presenceOfLocatedElement()
 titleContains()
 Example:
-WebElement buttonElement = driver.findElement(By.xpath(“//button[6]“));
+WebElement buttonElement = driver.findElement(By.xpath("//button[6]"));
 WebDriverWait wait = new WebDriverWait(driver, 10);
 wait.until(ExpectedConditions.elementToBeClickable(buttonElement));
 this wait means: wait for up to 10 seconds, until button becomes eligible to click.
 WebDriverWait has a default polling time - 500 milliseconds. It means, that WebDrvier is checking every 500 milliseconds if condition is true.
-Explicit wait - it’s an individual approach. Wheres Implicit - is general approach.
+Explicit wait - it's an individual approach. Wheres Implicit - is general approach.
 Implicit wait - we use only once.
 Explicit wait - as many times as we need.
 If condition failed, webdriver throws exception.
-org.openqa.selenium.TimeoutException: Expected condition failed: waiting for title to contain “Amazon”. Current title: “Google” (tried for 10 second(s) with 500 milliseconds interval)
+org.openqa.selenium.TimeoutException: Expected condition failed: waiting for title to contain "Amazon". Current title: "Google" (tried for 10 second(s) with 500 milliseconds interval)
 When condition fails, it throws TimeoutException.
+org.openqa.selenium.ElementClickInterceptedException: element click intercepted: Element <button type="submit" class="btn btn-primary">...</button> is not clickable at point (97, 480).
+Other element would receive the click: <div class="loadingoverlay" style="box-sizing: border-box; position: fixed; display: flex; flex-flow: column nowrap; align-items: center; justify-content: space-around; background: rgba(255, 255, 255, 0.8); top: 0px; left: 0px; width: 100%; height: 100%; z-index: 2147483647; opacity: 1;">...</div>
+ElementClickInterceptedException - means that something else was clicked instead of your element.
+###Fluent wait - it's a custom explicit wait. With Fluent wait we can define the maximum amount of wait time for condition and element as well as frequency with which to check for the condition (polling time).
+For explicit wait, polling time is always 500 milliseconds. In fluent wait, we can change it.
+ Wait<WebDriver> wait = new FluentWait<>(driver).
+                withTimeout(Duration.ofSeconds(10)).
+                pollingEvery(Duration.ofSeconds(5)).
+                ignoring(NoSuchElementException.class).
+                ignoring(ElementClickInterceptedException.class);
+        WebDriverWait  webDriverWait = new WebDriverWait(driver, 15);
+        webDriverWait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("loadingoverlay")));
+        //Anonymous - class without name
+        WebElement submitBtn = wait.until(driver -> driver.findElement(By.xpath("//button[text()='Submit']")));
+        driver.findElement(By.name("username")).sendKeys("tomsmith");
+        driver.findElement(By.name("password")).sendKeys("SuperSecretPassword");
+        submitBtn.click();
+##############################
+Synchronization - one of the biggest issues in selenium webdriver. To resolve wait issues, we have:
+    Thread.sleep()
+    implicit wait
+    explicit wait
+    fluent wait
+Thread.sleep() - to pause java program, not coming from selenium, it's a java feature
+implicit wait - wait for element to be present in DOM. Apply only once, works before findElement() automatically
+explicit wait - wait for specific element based on specific condition withing specific time.
+fluent wait - like explicit wait, but also allows to change polling time.

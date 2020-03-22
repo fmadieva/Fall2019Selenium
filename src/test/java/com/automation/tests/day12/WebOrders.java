@@ -58,30 +58,27 @@ public class WebOrders {
      * Then verify that Steve Johns zip code is 20002
      */
     @Test
-    public void updateZipCode(){
+    public void updateZipCode() {
 
-        String expected = "21233"; // you can have expected to compare with actual.
+        WebElement zipcode = driver.findElement(By.xpath("//td[text()='Steve Johns']//following-sibling::td[7]"));
+        Assert.assertEquals(zipcode.getText(), "21233");
 
+        //click on update image
 
-        WebElement zipCode = driver.findElement(By.xpath("//*[text()='21233']"));
-        String actual1 = zipCode.getText();
-        Assert.assertEquals(actual1,expected);
-        BrowserUtils.wait(3);
-        driver.findElement(By.xpath("(//input[@type=\"image\"])[3]")).click();
-        BrowserUtils.wait(3);
-        driver.findElement(By.id("ctl00_MainContent_fmwOrder_TextBox5")).clear();
-        driver.findElement(By.id("ctl00_MainContent_fmwOrder_TextBox5")).sendKeys("20002");
-        BrowserUtils.wait(3);
+        driver.findElement(By.xpath(" //td[text()='Steve Johns']//following-sibling::td/input")).click();
+
+        WebElement zipcodeInput = driver.findElement(By.id("ctl00_MainContent_fmwOrder_TextBox5"));
+
+        zipcodeInput.clear();
+        zipcodeInput.sendKeys("20002");
+
         driver.findElement(By.id("ctl00_MainContent_fmwOrder_UpdateButton")).click();
-        BrowserUtils.wait(3);
-        WebElement zipCode2 = driver.findElement(By.xpath("//*[text()='20002']"));
-        String expected2 = "20002";
-        String actual2 = zipCode2.getText();
-        Assert.assertEquals(actual2,expected2);
+
+        zipcode = driver.findElement(By.xpath("//td[text()='Steve Johns']//following-sibling::td[7]"));
+        Assert.assertEquals(zipcode.getText(), "20002");
+
+
     }
-
-
-
 
 
     @AfterMethod
