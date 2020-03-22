@@ -1,0 +1,88 @@
+Today is March 4, 2020
+
+Agenda:
+Locators
+findElements() ---> List<WebElement>
+
+
+################################################
+Under tests, create a package "warmup"
+
+@channel WARM-UP
+Go to ebay ---> driver.get("http://ebay.com");
+enter search term input.sendKeys("java book");
+click on search button searchButton.click();
+print number of results System.out.println(numOfResults.getText()); By,tagName("h1")
+
+go to amazon
+enter search term
+click on search button
+verify title contains search term
+
+Go to wikipedia.org
+enter search term `selenium webdriver`
+click on search button
+click on search result `Selenium (software)`
+verify url ends with `Selenium_(software)`
+
+until 7:25 pm
+
+StaleElementReferenceException: stale element reference: element is not attached to the page document
+
+Interview question: what is StaleElementReferenceException?
+
+StaleElementReferenceException - means that selenium cannot find previously located element. It happens, when you are trying to interact with element after page refresh or navigation
+
+
+break until 9:04
+
+How to handle it?
+
+- if it occurs, you need to find element again.
+
+try{
+//if it generates exception once in a while,
+//put it into try/catch and try to find element one more time
+
+driver.findElement(By.id("name")).click()
+
+}catch(StaleElementReferenceException e){
+
+driver.findElement(By.id("name")).click()
+}
+
+
+what happens if element wasn't found, in case of findElement?
+
+NoSuchElementException
+
+what happens if elements weren't found, in case of findElements?
+
+nothing, you will get empty list.
+
+
+Interview question: how to check if element doesn't exists any more/ just doesn't exist?
+
+check if collection/list is empty
+
+if(driver.findElements(By.id("name")).size() == 0){
+
+element doesn't exist!
+}
+
+You can use findElements method to find 0+ elements
+
+In case of findElement - only 1 element. If there is no element by given locator - NoSuchElementExcetion
+
+
+######################################################
+
+findElements() ----- to find lots of elements at once. Returns List<WebElement>
+
+in case of findElement - you are getting 1 element. If locator is wrong - NoSuchElementException.
+
+in case of findElements - you can get 0+ elements. if locator is wrong or element is gone already, you will get empty list.
+
+all links have <a> tag
+
+StaleElementReferenceException - selenium cannot use webelement any more. Element is old.

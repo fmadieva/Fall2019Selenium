@@ -1,0 +1,101 @@
+Today is March 3, 2020
+
+Agenda:
+Locators
+WebElement
+
+######################################
+
+Recommendations:
+#1 Watch short videos before the class
+#2 Practice a looooot
+#3 Keep reading related information from books, articles or watch related videos on youtube, etc..
+
+#3 - It's not only about selenium, it's about how people improve them self in IT. Listen to podcasts, audio books.
+
+testing related podcasts: Joe Colantonio
+
+book for selenium: only one - Selenium Cookbook 2nd generation
+
+#1 book for interview preparation: https://www.amazon.com/Cracking-Coding-Interview-Programming-Questions/dp/0984782850
+
+#############################################################
+
+
+WebElement - this is how selenium wraps any kind of elements on the page. Represents HTML element.
+
+WebElement - is an interface.
+
+driver find an element by this locator
+
+driver.findElement(By.name("last-name"));
+
+findElement - it's a method, that returns a WebElement object;
+
+tests package - this is where we gonna store all our tests.
+
+utilities - package, for storing reusable methods that will support our tests. For example, we can create a class with that will give us a WebDriver, whenever we need it.
+
+We have 8 locators:
+id <----- <h3 id="smth"></h3> the best locator. Always unique
+
+name <----- <h3 name="smth"></h3> good locator. Not Always unique, but mostly
+
+tagName <----- <h3></h3> | h3 is a tag name. not good locator, almost never unique
+
+className <----- <h3 class="smth"></h3> not good locator, because almost never unique
+
+linkText <----- ok locator, sometimes unique
+partialLinkText <----- same as linkText
+xpath
+cssSelector
+
+to check if tag name is unique:
+
+//tagname
+
+
+if you want to check some attribute like name, id, class just put attribute=value pair into square brackets []
+
+[name='password']
+
+
+
+If it shows 1 of 1 - locator is unique
+
+If you see button on page, it doesn't always based on <button> tag. Check first what kind of <tag> represents that element
+
+getAttribute("attribute") --> returns attributes value.
+
+For example:
+
+<a class="button secondary radius" href="/logout"><i class="icon-2x icon-signout"> Logout</i></a>
+
+a - tag name
+
+class - attribute
+href - attribute
+
+Logout - text
+
+getAttribute("class") --> button secondary radius
+#####################################
+
+WebElement - any HTML element on the page for Selenium
+Locators, the best locator is an id
+name
+tagName
+linkText
+partialLinkText
+id
+className
+not covered yet: xpath and cssSelector
+
+to enter the text, we use .sendKeys("text")
+to read the text, we use element.getText()
+to read some attribute, we use .getAttribute("attribute_name")
+
+What is your locator is wrong? How you gonna find out?
+-you will get - NoSuchElementException
+
+submit() you can use it, for buttons that have a type="submit". Can be useful when click() method doesn't work (sometimes it happens)
