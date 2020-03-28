@@ -23,6 +23,11 @@ public abstract class AbstractPageBase {
         PageFactory.initElements(driver, this);
     }
 
+    /**
+     * Method for vytrack navigation. Provide tab name and module name to navigate
+     * @param tabName, like Dashboards, Fleet or Customers
+     * @param moduleName, like Vehicles, Vehicles Odometer and Vehicles Costs
+     */
     public void navigateTo(String tabName, String moduleName){
         String tabNameXpath = "//span[@class='title title-level-1' and contains(text(),'"+tabName+"')]";
         String moduleXpath = "//span[@class='title title-level-2' and text()='" + moduleName + "']";
@@ -39,6 +44,7 @@ public abstract class AbstractPageBase {
                 click(moduleElement).
                 build().perform();
 
+        //increase this wait rime if still failing
         BrowserUtils.wait(4);
     }
 }
