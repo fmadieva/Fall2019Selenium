@@ -30,8 +30,9 @@ public class LoginPage {
         // to connect our webdriver, page class and page factory
         // pageFactory - used to use @FindBy annotations
         // PageFactory - helps to find elements easier
-        PageFactory.initElements(Driver.getDriver(), LoginPage.class); // it will always be the same in all classes.
-        // or like this --> PageFactory.initElements(Driver.getDriver(), this);
+        //PageFactory.initElements(Driver.getDriver(), LoginPage.class); // it will always be the same in all classes.
+        // or like this -->
+        PageFactory.initElements(Driver.getDriver(), this);
 
     }
 
