@@ -7,6 +7,9 @@ import com.automation.utilities.DateTimeUtilities;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class NewCalendarEventsTests extends AbstractTestBase {
 
     LoginPage loginPage = new LoginPage();
@@ -57,6 +60,31 @@ public class NewCalendarEventsTests extends AbstractTestBase {
         long actual = DateTimeUtilities.getTimeDifference(startTime, endTime, format);
 
         Assert.assertEquals(actual, 1, "Time difference is not correct");
+    }
+
+/**
+ * ::::use qa1::::
+ * Test Case: Verify calendar events table
+ * Login as store manager
+ * Go to Activities --> Calendar Events
+ * And verify that column names displayed:
+ * |TITLE            |
+ * |CALENDAR         |
+ * |START            |
+ * |END              |
+ * |RECURRENT        |
+ * |RECURRENCE       |
+ * |INVITATION STATUS|
+ */
+
+    @Test
+    public void verifyColumnNamesTest(){
+        loginPage.login();
+        calendarEventsPage.navigateTo("Activities", "Calendar Events");
+
+        List<String> expected = Arrays.asList("TITLE", "CALENDAR", "START", "END", "RECURRENT", "RECURRENCE", "INVITATION STATUS");
+
+        Assert.assertEquals(calendarEventsPage.getColumnNames(), expected);
     }
 
 }
