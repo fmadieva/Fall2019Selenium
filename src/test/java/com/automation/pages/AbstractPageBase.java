@@ -1,4 +1,3 @@
-
 package com.automation.pages;
 
 import com.automation.utilities.BrowserUtils;
@@ -7,7 +6,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 /**
  * This class will be extended by page classes
@@ -18,18 +20,30 @@ import org.openqa.selenium.support.PageFactory;
  */
 public abstract class AbstractPageBase {
     protected WebDriver driver = Driver.getDriver();
+    protected WebDriverWait wait = new WebDriverWait(driver, 15);
 
-    public AbstractPageBase(){
+    @FindBy(css = "#user-menu > a")
+    protected WebElement currentUser;
+
+    public AbstractPageBase() {
         PageFactory.initElements(driver, this);
     }
+
+
+    public String getCurrentUserName(){
+        BrowserUtils.waitForPageToLoad(10);
+        wait.until(ExpectedConditions.visibilityOf(currentUser));
+        return currentUser.getText().trim();
+    }
+
 
     /**
      * Method for vytrack navigation. Provide tab name and module name to navigate
      * @param tabName, like Dashboards, Fleet or Customers
      * @param moduleName, like Vehicles, Vehicles Odometer and Vehicles Costs
      */
-    public void navigateTo(String tabName, String moduleName){
-        String tabNameXpath = "//span[@class='title title-level-1' and contains(text(),'"+tabName+"')]";
+    public void navigateTo(String tabName, String moduleName) {
+        String tabNameXpath = "//span[@class='title title-level-1' and contains(text(),'" + tabName + "')]";
         String moduleXpath = "//span[@class='title title-level-2' and text()='" + moduleName + "']";
 
         WebElement tabElement = driver.findElement(By.xpath(tabNameXpath));
@@ -40,7 +54,7 @@ public abstract class AbstractPageBase {
         BrowserUtils.wait(4);
 
         actions.moveToElement(tabElement).
-                pause(3000).
+                pause(2000).
                 click(moduleElement).
                 build().perform();
 
