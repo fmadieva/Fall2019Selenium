@@ -1,11 +1,19 @@
 package com.automation.utilities;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BrowserUtils {
@@ -71,4 +79,59 @@ public class BrowserUtils {
     public static void scrollTo(WebElement element) {
         ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
     }
+
+    /**
+     *This method takes a screenshot
+     * @param name screenshot name
+     * @return path to the screenshot
+     */
+    public static String getScreenshot(String name){
+        //adding date and time to screenshot name, to make screenshot unique
+        name = new Date().toString().replace(" ", "_").replace(":", "-") + "_" + name;
+        //where we gonna store a screenshot
+        String path = "";
+        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+            path = System.getProperty("user.dir") + "/test-output/screenshots/" + name + ".png";
+        } else {
+            path = System.getProperty("user.dir") + "\\test-output\\screenshots\\" + name + ".png";
+        }
+        System.out.println("OS name: " + System.getProperty("os.name"));
+        System.out.println("Screenshot is here: " + path);
+        TakesScreenshot takesScreenshot = (TakesScreenshot) Driver.getDriver(); // since our reference type is webDriver we cannot see methods from TakesScreenshot Interface, thats why we do casting.
+        File source = takesScreenshot.getScreenshotAs(OutputType.FILE); // it takes a screenshot of the web browser and saves it as a file object // this line does the job
+        File destination = new File(path); // where we will save the screenshot
+        try{
+            FileUtils.copyFile(source, destination); // copy file to the previously specified location
+        }catch( IOException e) {
+            e.printStackTrace();
+        }
+        return path;
+
+        // no matter if the test fails or passes if we have this method called in our test,it will take a screenshot
+
+    }
+
+
 }
+
+
+
+//    /test-output/ -->  result
+//    screenshots --> folder
+//    png --> extention
+
+/*
+ name = new Date().toString().replace(" ", "_").replace(":", "-") + "_" + name; // adding date and time to screenshot name  *if you want date to show first, just move the name to the right.
+        String path = System.getProperty("user.dir")+"/test-output/screenshots/"+name+".png"; // location  where the screenshot would be stored in
+        System.out.println("Screenshot is here: "+ path);
+        TakesScreenshot takesScreenshot = (TakesScreenshot) Driver.getDriver(); // since our reference type is webDriver we cannot see methods from TakesScreenshot Interface, thats why we do casting.
+        File source = takesScreenshot.getScreenshotAs(OutputType.FILE); // it takes a screenshot of the web browser and saves it as a file object // this line does the job
+        File destination = new File(path); // where we will save the screenshot
+        try{
+            FileUtils.copyFile(source, destination); // copy file to the previously specified location
+        }catch( IOException e) {
+            e.printStackTrace();
+        }
+        return path;
+
+ */
