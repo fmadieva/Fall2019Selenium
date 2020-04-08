@@ -1,9 +1,11 @@
 package com.automation.tests.day25_excel_io;
 
+import com.automation.utilities.ExcelUtil;
 import org.apache.poi.ss.usermodel.*;
 import org.testng.annotations.Test;
 
 import java.io.File;
+import java.util.Map;
 
 public class ReadDataFromExcel {
 
@@ -54,7 +56,29 @@ public class ReadDataFromExcel {
         }
 
 
-
-
     }
+
+    @Test
+    public void excelUtilityTest(){
+        String path = "/Users/fmadieva/IdeaProjects/Fall2019Selenium/VytrackTestUsers.xlsx";
+        String spreadSheet = "QA1-all";
+        ExcelUtil excelUtil = new ExcelUtil(path, spreadSheet );
+
+        //https://docs.oracle.com/javase/tutorial/java/javaOO/methodreferences.html
+      //  excelUtil.getDataList().forEach(System.out::println); // shortcut for printing for each
+
+        for (Map<String, String> record : excelUtil.getDataList()){
+            System.out.println(record);
+        }
+    }
+
+    @Test
+    public void getColumnNamesTest() {
+        String path = "VytrackTestUsers.xlsx";
+        String spreadSheet = "QA1-short";
+        ExcelUtil excelUtil = new ExcelUtil(path, spreadSheet);
+
+        System.out.println(excelUtil.getColumnsNames());
+    }
+
 }
