@@ -26,7 +26,7 @@ public class ExcelUtil {
             // Open the Excel file
             FileInputStream ExcelFile = new FileInputStream(path);
             // Access the required test data sheet
-            workBook = WorkbookFactory.create(ExcelFile);
+            workBook = WorkbookFactory.create(ExcelFile); //we use it cuz there are two types of excel files, when you work in a project that you have to manage 2 different types of files and this helps you
             workSheet = workBook.getSheet(sheetName);
             // check if sheet is null or not. null means  sheetname was wrong
             Assert.assertNotNull(workSheet, "Sheet: \"" + sheetName + "\" does not exist\n");
